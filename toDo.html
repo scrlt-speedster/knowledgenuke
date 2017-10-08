@@ -1,0 +1,598 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.js"></script> 
+<script src="angular-spinkit.js"></script>
+<link rel="stylesheet" type="text/css" href="popup.css"></link> 
+ <link rel="stylesheet" href="angularjs-datetime-picker.css" />
+        <script src="angularjs-datetime-picker.js"></script>
+<style type="text/css">
+    
+       body{
+        margin:0px;
+        background:#FFF;
+        }
+
+    .header-cont {
+        width:100%;
+        position:fixed;
+        top:0px;
+        background:white;
+        border:1px solid #CCC;
+
+        }
+    
+    .title {
+    height:40px;
+    background:#F0F0F0;
+    float:left;
+    font-family:"Lucida Console";
+    font-size:25px;
+    color:#6495ED;
+    margin:10px ;
+   padding:10px;
+    text-align:centre;
+        }
+
+.content {
+   
+ 
+
+   
+  padding:20px;
+margin:20px 0;
+    flex:8;
+}
+.title2{
+font-size:30px;
+margin-top:100px;
+ 
+padding:20px;
+text-align:center;
+color:#f43;
+ 
+}
+
+.login-group{
+float:right;
+margin:10px;
+text-decoration: none; ss
+}
+input[type="button"]{background-color:#9400D3;border-radius: 5px;color:#fff;height:30px;text-decoration: none;}
+
+.search {
+  width: 100%;
+  position: relative;
+
+}
+
+.searchTerm {
+  float: left;
+  width: 100%;
+  border: 3px solid #00B4CC;
+  padding: 5px;
+  height: 20px;
+  border-radius: 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.searchButton {
+  position: absolute;  
+  right: -30px;
+  width: 40px;
+  height: 36px;
+  border: 1px solid #00B4CC;
+  background: #00B4CC;
+  text-align: center;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+background: #00B4CC;
+}
+
+/*Resize the wrap to see the search bar change!*/
+.wrap{
+  width: 30%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+img {
+    width:100%;
+   
+}
+ 
+ 
+.contentHead{
+color:orange;
+font-style: bold;
+font-size:20px;
+}
+.sideAndContent{
+margin:20px 30px;
+
+display:flex;
+ justify-content: space-around;
+}
+
+.topicList{
+display:flex;
+width:80%;
+}
+.topicList a {
+    background-color: #eee; /* Grey background color */
+    color: black; /* Black text color */
+    display: block; /* Make the links appear below each other */
+    padding: 12px; /* Add some padding */
+    text-decoration: none; /* Remove underline from links */
+    border:1px solid #ccc;
+   border-radius:5px;
+ flex:8;
+}
+.topicList .button{flex:2;}
+.topicList a:hover{
+    background-color: #ccc; /* Dark grey background on mouse-over */
+}
+
+.vertical-menu {
+    width: 200px; /* Set a width if you like */
+flex: 2;
+
+}
+
+.myForm{
+padding:15px;
+margin: 15px;
+}
+ .myForm input[type=submit] {
+    width: 30%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px ;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+ .myForm input[type=submit]:disabled {
+   
+    background-color: #dddddd;
+    
+}
+ .myForm input[type=submit]:disabled:hover {
+   
+    background-color: #dddddd;
+    
+}
+.date{
+   width: 40%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.myForm textarea{
+height:200px;
+width:70%;
+overflow:auto;
+ padding: 14px 20px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.myForm input[type=file]{
+margin: 8px 0;
+width: 40%;
+}
+.myForm input[type=submit]:hover {
+    background-color: #45a049;
+}
+.myForm input[type=text]{
+    width: 70%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    
+}
+.vertical-menu a {
+    background-color: #eee; /* Grey background color */
+    color: black; /* Black text color */
+    display: block; /* Make the links appear below each other */
+    padding: 12px; /* Add some padding */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.vertical-menu a:hover {
+    background-color: #ccc; /* Dark grey background on mouse-over */
+}
+
+.vertical-menu a.active {
+    background-color: #00FFFF; /* Add a green color to the "active/current" link */
+    color: white;
+}
+.searchWrap{
+position:fixed;
+z-index:1;
+width:100%;
+height:300px;
+top:35px;
+overflow:auto;
+}
+.searchlist>a{
+
+background-color:#eee;
+text-decoration:none;
+
+display:block;
+padding:10px;
+}
+#myProgress {
+  width: 70%;
+  background-color: #ddd;
+}
+
+#myBar {
+  width: 100%;
+  height: 10px;
+  background-color: #4CAF50;
+}
+</style>
+
+
+    </head>
+
+    <body ng-app="myApp" ng-controller="myCtrl">
+     
+    <div class="header-cont ">
+        <a href=""><div class="title" ng-click="openHome()">Knowledge Nuke</div></a>
+
+       <div class="wrap">
+       <div class="search">
+      <input type="text" class="searchTerm" placeholder="What are you looking for?" ng-model="searchList" ng-change="callSearch()">
+      <button type="submit" class="searchButton" ng-click="openSearchPage()">
+       <i class="fa fa-search"></i>
+     </button>
+
+
+   </div>
+<div class="searchWrap" ng-show="searchList.length">
+  <div  class="searchlist" ng-repeat="x in searchRecords">
+    <a href="" ng-click="openTopic(x)">{{ x.Head }}</a>
+  </div>
+</div>
+</div>
+
+
+<div class="login-group">
+        
+</div>
+    </div>
+
+<div class="title2">ToDo Section </div>
+
+<div class="sideAndContent">
+ <div class="vertical-menu">
+  <a href="homepage.html"  >Home</a>
+  <a  href="topiclistpage.html">Topics</a>
+  <a ng-show="check()" href="tasklistpage.html">Tasks</a>
+  <a ng-show="check()" class="active" href="toDo.html">TO DO section</a>
+  <a href="contactUs.html">Contact Us</a>
+  
+</div> 
+
+<div class="content">  
+<div class="contentHead">
+Your tasks
+<hr>
+</div>
+
+<!--<div class="topicList" ng-repeat="x in records">
+<a href="" ng-click="toggle()" >{{x.Task}}</a>
+<button ng-click="deleteTask(x.Id)">remove</button>
+</div>-->
+<div ng-repeat="x in records">
+<div class="topicList" >
+<a href=""  ng-click="taskInfo(x)">{{x.Task}}</a>
+<button ng-click="deleteTask(x.Id)">remove</button>
+
+</div>
+<div id="myProgress">
+  <div id="myBar" ng-style="{'width':'{{x.Deadline}}%','background-color':'{{x.Mod_Ts}}'}"></div>
+</div>
+</div>
+<br>
+<br>
+<button ng-click="toggle()">Create a Task</button>
+<div ng-show="showSubmit">
+ <form name="myForm" class="myForm" novalidate>
+   
+   
+    <label for="uname">Title</label><br>
+    <input type="text"  name="user" placeholder="Your Title.." ng-model="blogForm.Task" required>
+ <span style="color:red" ng-show="myForm.user.$dirty && myForm.user.$invalid">
+  <span ng-show="myForm.user.$error.required">title is required.</span>
+  </span>
+     <br>
+
+    <label for="pass">Content</label><br>
+  <textarea  class="content" id="password" name="password"  ng-model="blogForm.Comment" required></textarea>
+<span style="color:red" ng-show="myForm.password.$dirty && myForm.password.$invalid">
+  <span ng-show="myForm.password.$error.required">Some Content is required.</span>
+  </span>
+<br>
+ 
+ <label for="uname">Complete By</label><br>
+   <input ng-model="blogForm.Deadline" class="date" name="date" datetime-picker  future-only required>
+ <span style="color:red" ng-show="myForm.date.$dirty && myForm.date.$invalid">
+  <span ng-show="myForm.date.$error.required">date is required.</span>
+  </span>
+
+<br>
+
+<br>
+    <input type="submit" value="Submit" ng-disabled=" myForm.user.$invalid||myForm.date.$invalid||myForm.password.$invalid " ng-click="submitBlog()">
+  </form>
+</div>
+
+
+
+</div>
+</div>
+<circle-spinner id="spinner" ng-show="prograssing"></circle-spinner>
+<!-- The Modal -->
+<div id="myModal" ng-show="showPopup" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span ng-click="close()" class="close">&times;</span>
+    <p>{{msg}}</p>
+<button ng-click="close()" style="border:none">OK</button>
+  </div>
+
+</div>
+<script>
+var app = angular.module('myApp', ['ngCookies','angularjs-datetime-picker','angularSpinkit']);
+app.controller('myCtrl', function($scope,$http,$window,$cookies) {
+
+$scope.showSubmit=0;
+
+$scope.taskInfo=function(x){
+$cookies.put('toDoTaskId',x.Id);
+$window.location.href="toDoTaskPage.html";
+}
+
+$scope.toggle=function(){
+console.log("toggle");
+if($scope.showSubmit)
+$scope.showSubmit=0;
+else
+$scope.showSubmit=1;
+}
+
+
+$scope.prograssing=true;
+$http.get("http://192.168.0.93:45455/api/to_do/getbyuser")
+.then(function (response) {
+	
+	console.log("success "+response.data);
+     $scope.records=response.data;
+var temp=[];
+for(var i=0;i<$scope.records.length;i++){
+//console.log($scope.records[i].Deadline);
+var d=new Date($scope.records[i].Deadline+"Z");
+var d2=new Date($scope.records[i].Create_Ts+"Z");
+
+
+
+//var d=parseInt((d.getTime()-new Date().getTime())/(d.getTime()-d2.getTime())*100);
+var d=parseInt((d.getTime()-(5.5*60*60*1000)-new Date().getTime())/(d.getTime()-(5.5*60*60*1000)-(d2.getTime()-(5.5*60*60*1000)))*100);
+if(d>=0)
+$scope.records[i].Deadline=d;
+else
+$scope.records[i].Deadline=0;
+
+if(d<=20)
+$scope.records[i].Mod_Ts='red';
+else
+$scope.records[i].Mod_Ts='blue';
+//temp[id]=parseInt((d.getTime()-new Date().getTime())/(d.getTime()-d2.getTime())*100);
+//temp.push([{'id':id},{'time':parseInt((d.getTime()-new Date().getTime())/(d.getTime()-d2.getTime())*100)}]);
+
+}
+
+$scope.prograssing=false;
+}, function (response) {
+	console.log("failure "+response.status);
+$scope.prograssing=false;
+$scope.msg="error connecting to server";
+$scope.showPopup=true;
+});
+$scope.openTopic=function(x){
+$cookies.put('topicId',x.Id);
+$window.location.href="TopicPage.html";
+};
+
+$scope.deleteTask=function(x){
+$http.delete("http://192.168.0.93:45455/api/to_do?id="+x)
+.then(function (response) {
+	
+	console.log("success "+response.data);
+$scope.prograssing=true;
+$http.get("http://192.168.0.93:45455/api/to_do/getbyuser")
+.then(function (response) {
+	
+	console.log("success "+response.data);
+     $scope.records=response.data;
+for(var i=0;i<$scope.records.length;i++){
+//console.log($scope.records[i].Deadline);
+var d=new Date($scope.records[i].Deadline+"Z");
+var d2=new Date($scope.records[i].Create_Ts+"Z");
+
+
+
+//var d=parseInt((d.getTime()-new Date().getTime())/(d.getTime()-d2.getTime())*100);
+var d=parseInt((d.getTime()-(5.5*60*60*1000)-new Date().getTime())/(d.getTime()-(5.5*60*60*1000)-(d2.getTime()-(5.5*60*60*1000)))*100);
+if(d>99)
+$scope.records[i].Deadline=100;
+else if(d<0)
+$scope.records[i].Deadline=0;
+else
+$scope.records[i].Deadline=d;
+if(d<=20)
+$scope.records[i].Mod_Ts='red';
+else
+$scope.records[i].Mod_Ts='blue';
+//temp[id]=parseInt((d.getTime()-new Date().getTime())/(d.getTime()-d2.getTime())*100);
+//temp.push([{'id':id},{'time':parseInt((d.getTime()-new Date().getTime())/(d.getTime()-d2.getTime())*100)}]);
+
+}
+$scope.prograssing=false;
+}, function (response) {
+	console.log("failure "+response.status);
+$scope.prograssing=false;
+$scope.msg="error connecting to server";
+Sscope.showPopup=true;
+});
+}, function (response) {
+	console.log("failure "+response.status);
+$scope.prograssing=false;
+$scope.msg="error connecting to server";
+Sscope.showPopup=true;
+});
+};
+$window.onclick = function() {
+   console.log("clicked");
+
+
+ $scope.$apply(function () {
+      $scope.searchList=[];
+    });
+}
+
+$scope.callSearch=function(){
+console.log($scope.searchList);
+if($scope.searchList.length){
+$http.get("http://192.168.0.93:45455/api/search?value="+$scope.searchList)
+.then(function (response) {
+	
+	console.log("success "+response.data);
+     $scope.searchRecords=response.data;
+
+}, function (response) {
+	console.log("failure "+response.status);
+
+});
+}
+
+};
+$scope.openSearchPage=function(){
+if($scope.searchList.length){
+$cookies.put('searchTerm',$scope.searchList);
+$window.location.href="searchResult.html";
+}
+};
+$scope.openHome=function(){
+$window.location.href="homepage.html";
+};
+
+$scope.close=function(){
+
+$scope.showPopup=false;
+
+};
+
+
+$scope.check=function(){
+if($cookies.get('token'))
+return true;
+else
+return false;
+};
+
+
+   $scope.signOut=function(){
+  $cookies.remove('token');
+    $cookies.remove('UserName');
+ $cookies.remove('UserId');
+ $cookies.remove('UserRole');
+ $cookies.remove('UserEmail');
+  $window.location.href ='homepage.html';
+};
+
+
+
+$scope.submitBlog=function(){
+
+$scope.prograssing=true;
+$http.post("http://192.168.0.93:45455/api/to_do",$scope.blogForm).then( function(response)
+{
+
+console.log("success "+response.data);
+$scope.prograssing=false;
+$scope.msg="Task created successfully";
+$scope.showPopup=true;
+},function(response){
+console.log("failure "+response.status);
+$scope.prograssing=false;
+$scope.msg="Failure to create task Maybe try YOUR LUCK again...";
+$scope.showPopup=true;
+});
+
+};
+
+
+
+});
+
+
+
+app.factory('httpRequestInterceptor', function ($cookies) {
+  return {
+   'request': function(config) {
+           console.log("second "+$cookies.get('token'));
+                
+               config.headers['token'] = $cookies.get('token');
+                console.log("config " +config.headers.token);
+          return config;
+    }
+  };
+});
+
+     app.config(['$httpProvider', function ($httpProvider,$cookies) {
+    //$httpProvider.defaults.headers.post['token'] =  $cookies.get('token');
+    $httpProvider.interceptors.push('httpRequestInterceptor');
+    
+}]);
+
+
+
+app.directive("loginGroup", function($cookies) {
+var innerData;
+if($cookies.get('token')){
+innerData=$cookies.get('UserName')+"<input type='button' value='signout' ng-click='signOut()'>";
+}
+else{
+innerData="<input type='button' value='Admin Section' ng-click='openAdmin()'><a href='login.html'><input type='button' value='Login'></a><a href='signup.html'><input type='button' value='Sign up' ></a>"    
+}
+return {
+        restrict : "C",
+        template : innerData
+     
+};
+});
+</script>
+</body></html>
+
+

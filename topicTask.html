@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.js"></script> 
+<script src="angularjs-dropdown-multiselect.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="angular-spinkit.js"></script>
+<link rel="stylesheet" type="text/css" href="popup.css"></link> 
+<script src="taskScript.js"></script>
+
+<style>
+.header-cont {
+        width:100%;
+        position:fixed;
+        top:0px;
+        background:white;
+        border:1px solid #CCC;
+          
+        }
+    
+    .title {
+    height:60px;
+    background:#F0F0F0;
+    float:left;
+    font-family:"Lucida Console";
+    font-size:25px;
+    color:#6495ED;
+    margin:10px ;
+   padding:10px;
+    text-align:centre;
+        }
+.search {
+  width: 100%;
+  position: relative;
+
+}
+.login-group{
+float:right;
+margin:10px;
+
+}
+.login-group input[type="button"]{background-color:#9400D3;border-radius: 5px;color:#fff;height:30px;text-decoration: none;}
+
+.searchTerm {
+  float: left;
+  width: 100%;
+  border: 3px solid #00B4CC;
+  padding: 5px;
+  height: 36px;
+  border-radius: 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.searchButton {
+  position: absolute;  
+  right: -30px;
+  width: 40px;
+  height: 36px;
+  border: 1px solid #00B4CC;
+  background: #00B4CC;
+  text-align: center;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+background: #00B4CC;
+}
+
+/*Resize the wrap to see the search bar change!*/
+.wrap{
+  width: 30%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+body{
+
+}
+
+
+.content button {
+  background-color: #008CBA; 
+    
+    color: white;
+    padding: 9px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 11px;
+border-radius:3px;
+}
+.content{
+flex:8;
+ border-radius: 5px;
+  border: 1px solid #CCC;
+background:#FAEBD7;
+align:center;
+ padding: 20px;
+
+}
+.contentTextArea{
+height:200px;
+width:100%;
+overflow:auto;
+ padding: 14px 20px;
+    margin: 8px 0;
+   
+    border:none;
+}
+
+hr{
+border-color:black;
+}
+.title2{
+font-size:30px;
+margin-top:100px;
+ 
+padding:20px;
+text-align:center;
+color:red;
+ 
+}
+.sideAndContent{
+margin:20px 30px;
+align-items:baseline;
+display:flex;
+ justify-content: space-around;
+}
+.vertical-menu {
+    width: 200px; /* Set a width if you like */
+flex: 2;
+
+}
+.topicList{
+display:flex;
+width:80%;
+}
+.topicList a {
+    background-color: #eee; /* Grey background color */
+    color: black; /* Black text color */
+    display: block; /* Make the links appear below each other */
+    padding: 12px; /* Add some padding */
+    text-decoration: none; /* Remove underline from links */
+    border:1px solid #ccc;
+   border-radius:5px;
+ flex:8;
+}
+.topicList .button{flex:2;}
+.topicList a:hover{
+    background-color: #ccc; /* Dark grey background on mouse-over */
+}
+
+.vertical-menu a {
+    background-color: #eee; /* Grey background color */
+    color: black; /* Black text color */
+    display: block; /* Make the links appear below each other */
+    padding: 12px; /* Add some padding */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.vertical-menu a:hover {
+    background-color: #ccc; /* Dark grey background on mouse-over */
+}
+
+.vertical-menu a.active {
+    background-color: #00FFFF; /* Add a green color to the "active/current" link */
+    color: white;
+}
+.addTopic{
+display:flex;
+}
+</style>
+
+</head>
+
+
+<body ng-app="myApp" ng-controller="topictask">  
+ <div class="header-cont">
+ <a href=""><div class="title" ng-click="openHome()">Knowledge Nuke</div></a>
+
+       <div class="wrap">
+       <div class="search">
+      <input type="text" class="searchTerm" placeholder="What are you looking for?">
+      <button type="submit" class="searchButton">
+       <i class="fa fa-search"></i>
+     </button>
+   </div>
+</div>
+<div class="login-group">
+        
+</div>
+    </div>
+<div class="title2">{{taskTitle}}</div>
+<div class="sideAndContent">
+ <div class="vertical-menu">
+  <a href="homepage.html"  >Home</a>
+  <a href="topiclistpage.html" >Topics</a>
+  <a ng-show="check()" href="tasklistpage.html">Tasks</a>
+   <a ng-show="check()"  href="toDo.html">TO DO section</a>
+  <a href="contactUs.html">Contact Us</a>
+  
+</div> 
+
+
+<div class="content">
+<p>
+<h3>Description</h3>
+<hr>
+
+<textarea class="contentTextArea" ng-model="Description"></textarea>
+<button ng-click="editTask()">Edit Task</button>
+
+</p>
+<br>
+<p>
+
+<h3>Your Suggested Topics</h3>
+<hr>
+
+
+<div class="topicList" ng-repeat="x in record">
+<a href=""  ng-click="topicInfo(x)">{{x.Topic.Name}}</a>
+<button ng-click="deleteTopic(x.Id)">remove</button>
+</div>
+
+</p>
+<div class="addTopic">
+
+
+
+  <div ng-dropdown-multiselect="" 
+         options="resultsWithInfo" 
+         selected-model="selected_Topics"
+         extra-settings="selected_Topics_settings"
+         translation-texts="selected_Topics_customTexts"
+         checkboxes="true"></div>
+
+<button ng-click="addTopic()">Add</button>
+
+ </div>
+<br>
+
+<h3>Integrated Modules</h3>
+<hr>
+
+<div ng-repeat="x in integrated">
+<div class="topicList" >
+<a href=""   ng-click="setAccordian(x)">{{x.Head}}<span ng-show="accordian==x.Id" style="float:right;color:grey">-</span>
+<span ng-show="accordian!=x.Id" style="float:right;color:grey">+</span></a>
+<button ng-click="deleteIntegrated(x.Id)">remove</button>
+
+</div>
+<p style="background-color:white;width:65%;white-space:pre-wrap;" ng-show="accordian==x.Id">{{x.Post}}</p>
+</div>
+
+<button ng-click="addIntegrated()">Add</button>
+
+
+</div>
+</div>
+<circle-spinner id="spinner" ng-show="prograssing"></circle-spinner>
+<!-- The Modal -->
+<div id="myModal" ng-show="showPopup" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span ng-click="close()" class="close">&times;</span>
+    <p>{{msg}}</p>
+<button ng-click="close()" style="border:none">OK</button>
+  </div>
+
+</div>
+</body>
+</html>
+

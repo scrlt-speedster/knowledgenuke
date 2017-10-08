@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script> 
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.js"></script> 
+ <script src="http://urigo.github.io/angular-spinkit/javascripts/angular-spinkit.js"></script>
+<link rel="stylesheet" type="text/css" href="popup.css"></link>
+<style>
+body{
+background-image:url("walle.jpg");
+}
+.header-cont {
+        width:100%;
+        position:fixed;
+        top:0px;
+        background:white;
+        border:1px solid #CCC;
+
+        }
+    
+    .title {
+    height:40px;
+    background:#F0F0F0;
+    float:left;
+    font-family:"Lucida Console";
+    font-size:25px;
+    color:#6495ED;
+    margin:10px ;
+   padding:10px;
+    text-align:centre;
+        }.search {
+  width: 100%;
+  position: relative;
+
+}
+.login-group{
+float:right;
+margin:10px;
+
+}
+.login-group input[type="button"]{background-color:#9400D3;border-radius: 5px;color:#fff;height:30px;text-decoration: none;}
+.searchTerm {
+  float: left;
+  width: 100%;
+  border: 3px solid #00B4CC;
+  padding: 5px;
+  height: 20px;
+  border-radius: 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.searchButton {
+  position: absolute;  
+  right: -30px;
+  width: 40px;
+  height: 36px;
+  border: 1px solid #00B4CC;
+  background: #00B4CC;
+  text-align: center;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+background: #00B4CC;
+}
+
+/*Resize the wrap to see the search bar change!*/
+.wrap{
+  width: 30%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.frm input[type=text],input[type=email],input[type=password],select{
+    width: 70%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+   
+}
+
+.frm input[type=submit] {
+    width: 70%;
+    background-color: #1E90FF;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.frm input[type=submit]:hover {
+    background-color: #191970;
+}
+
+.frm {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    width:60%;
+    align:center;
+    margin-top:100px;
+    flex:8;
+}
+
+.sideAndContent{
+margin:20px 30px;
+align-items:baseline;
+display:flex;
+ justify-content: space-around;
+}
+.vertical-menu {
+    width: 200px; /* Set a width if you like */
+flex: 2;
+
+}
+
+.vertical-menu a {
+    background-color: #eee; /* Grey background color */
+    color: black; /* Black text color */
+    display: block; /* Make the links appear below each other */
+    padding: 12px; /* Add some padding */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.vertical-menu a:hover {
+    background-color: #ccc; /* Dark grey background on mouse-over */
+}
+
+.vertical-menu a.active {
+    background-color: #00FFFF; /* Add a green color to the "active/current" link */
+    color: white;
+}
+#spinner{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    color: white;
+
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+}
+
+</style>
+</head>
+
+
+<body ng-app="myApp" ng-controller="validateCtrl">  
+
+ <div class="header-cont ">
+    <a href=""><div class="title" ng-click="openHome()">Knowledge Nuke</div></a>
+
+       <div class="wrap">
+       <div class="search">
+      <input type="text" class="searchTerm" placeholder="What are you looking for?">
+      <button type="submit" class="searchButton">
+       <i class="fa fa-search"></i>
+     </button>
+   </div>
+</div>
+<div class="login-group">
+        
+</div>
+    </div>
+<div class="sideAndContent">
+ <div class="vertical-menu">
+  <a href="homepage.html"  >Home</a>
+  <a href="topiclistpage.html">Topics</a>
+   <a ng-show="check()" href="tasklistpage.html">Tasks</a>
+  <a href="contactUs.html">Contact Us</a>
+  
+</div> 
+
+
+<div class="frm">
+<h3>SignUp</h3>
+<hr>
+  <form  name="myForm"  method="post" enctype="multipart/form-data" novalidate>
+    <label for="EID">Employee Id</label><br>
+    <input type="text"  name="Eid"  ng-model="User.EId" placeholder="Your Employee id.." required>
+    <span style="color:red" ng-show="myForm.Eid.$dirty && myForm.Eid.$invalid">
+  <span ng-show="myForm.Eid.$error.required">Employee ID is required.</span>
+  </span>
+   
+ <br>
+
+    <label for="fname">First Name</label><br>
+    <input type="text"  name="firstname" placeholder="Your name.." ng-model="User.FName" required>
+ <span style="color:red" ng-show="myForm.firstname.$dirty && myForm.firstname.$invalid">
+  <span ng-show="myForm.firstname.$error.required">First Name is required.</span>
+  </span>
+<br>
+    <label for="lname">Last Name</label><br>
+    <input type="text" id="lname" name="lastname" placeholder="Your last name.." ng-model="User.LName" required>
+ <span style="color:red" ng-show="myForm.lastname.$dirty && myForm.lastname.$invalid">
+  <span ng-show="myForm.lastname.$error.required">Last Name is required.</span>
+  </span>
+<br>
+    
+    <label for="email">Email</label><br>
+    <input type="email" id="email" name="email" placeholder="Your email.." ng-model="User.Email" required>
+<span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
+<span ng-show="myForm.email.$error.required">Email is required.</span>
+<span ng-show="myForm.email.$error.email">Invalid email address.</span>
+</span>
+<br>
+    <label for="pass">Password</label><br>
+    <input type="password" id="password" name="password" placeholder="Your Password.." ng-model="User.Password" required>
+<span style="color:red" ng-show="myForm.password.$dirty && myForm.password.$invalid">
+  <span ng-show="myForm.password.$error.required">Password is required.</span>
+  </span>
+<br>
+<label for="uname">Role</label><br>
+    <select type="text"  name="user" placeholder="Select role.." ng-model="role"  ng-options="x.Name for x in roles" required>
+ <span style="color:red" ng-show="myForm.user.$dirty && myForm.user.$invalid">
+  <span ng-show="myForm.user.$error.required">Role is required.</span>
+  </span>
+     <br>
+    <input type="submit" value="Submit" ng-disabled="myForm.firstname.$invalid || myForm.user.$invalid || 
+myForm.lastname.$invalid || myForm.email.$invalid || myForm.Eid.$invalid || myForm.password.$invalid"  ng-click="validate()">
+ 
+
+ </form>
+ <circle-spinner id="spinner" ng-show="prograssing"></circle-spinner>
+</div>
+<!-- The Modal -->
+<div id="myModal" ng-show="showPopup" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span ng-click="close()" class="close">&times;</span>
+    <p>{{msg}}</p>
+<button ng-click="close()" style="border:none">OK</button>
+  </div>
+
+</div>
+</div>
+<script>
+var app = angular.module('myApp', ['ngCookies','angularSpinkit']);
+app.controller('validateCtrl', function($scope,$http,$window,$cookies) {
+  
+$scope.check=function(){
+if($cookies.get('token'))
+return true;
+else
+return false;
+};
+
+$scope.close=function(){
+$scope.showPopup=false;
+};
+$scope.prograssing=true;
+$http.get("http://192.168.0.93:45455/api/user")
+.then(function (response) {
+	
+	console.log("success "+response.data);
+	 $scope.roles=response.data;
+$scope.prograssing=false;
+}, function (response) {
+    $scope.prograssing=false;
+	console.log("failure "+response.status);
+$scope.msg="error connecting to server";
+   $scope.showPopup=true;
+   
+});
+
+$scope.openHome=function(){
+$window.location.href="homepage.html";
+};
+   $scope.validate = function() {
+	$scope.User.Role_Id=$scope.role.Id;
+      console.log($scope.User);
+$scope.prograssing=true;
+$http.post("http://192.168.0.93:45455/api/user",$scope.User)
+.then(function (response) {
+	
+	console.log("success "+response.data);
+       $scope.prograssing=false;
+	  $window.location.href ='login.html';
+}, function (response) {
+	console.log("failure "+response.status);
+   // $scope.any = response.status;
+$scope.prograssing=false;
+$scope.msg="error signing up";
+$scope.showPopup=true;
+
+});
+    };
+
+});
+app.directive("loginGroup", function($cookies) {
+var innerData;
+if($cookies.get('token')){
+innerData=$cookies.get('UserName')+"<input type='button' value='signout' ng-click='signOut()'>";
+}
+else{
+innerData="<input type='button' value='Admin Section' ng-click='openAdmin()'><a href='login.html'><input type='button' value='Login'></a><a href='signup.html'><input type='button' value='Sign up' ></a>"    
+}
+return {
+        restrict : "C",
+        template : innerData
+     
+
+       
+    };
+});
+app.factory('httpRequestInterceptor', function ($cookies) {
+  return {
+   'request': function(config) {
+           console.log("second "+$cookies.get('token'));
+                
+               config.headers['token'] = $cookies.get('token');
+                console.log("config " +config.headers.token);
+          return config;
+    }
+  };
+});
+
+     app.config(['$httpProvider', function ($httpProvider,$cookies) {
+    //$httpProvider.defaults.headers.post['token'] =  $cookies.get('token');
+    $httpProvider.interceptors.push('httpRequestInterceptor');
+    
+}]);
+</script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.js"></script> 
+<script src="angularjs-dropdown-multiselect.js"></script>
+ <script src="angular-spinkit.js"></script>
+<link rel="stylesheet" type="text/css" href="popup.css"></link> 
+<script src="taskScript.js"></script>
+
+<style>
+.header-cont {
+        width:100%;
+        position:fixed;
+        top:0px;
+        background:white;
+        border:1px solid #CCC;
+
+        }
+    
+    .title {
+    height:40px;
+    background:#F0F0F0;
+    float:left;
+    font-family:"Lucida Console";
+    font-size:25px;
+    color:#6495ED;
+    margin:10px ;
+   padding:10px;
+    text-align:centre;
+        }.search {
+  width: 100%;
+  position: relative;
+
+}
+.login-group{
+float:right;
+margin:10px;
+
+}
+.login-group input[type="button"]{background-color:#9400D3;border-radius: 5px;color:#fff;height:30px;text-decoration: none;}
+.searchTerm {
+  float: left;
+  width: 100%;
+  border: 3px solid #00B4CC;
+  padding: 5px;
+  height: 20px;
+  border-radius: 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.searchButton {
+  position: absolute;  
+  right: -30px;
+  width: 40px;
+  height: 36px;
+  border: 1px solid #00B4CC;
+  background: #00B4CC;
+  text-align: center;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+background: #00B4CC;
+}
+
+/*Resize the wrap to see the search bar change!*/
+.wrap{
+  width: 30%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.frm input[type=text],input[type=email],input[type=password]{
+    width: 70%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+body{
+/*background-image:url("walle.jpg");
+*/
+}
+.frm input[type=submit] {
+    width: 70%;
+    background-color: #1E90FF;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.frm input[type=submit]:hover {
+    background-color: #191970;
+}
+
+ .frm{
+    border-radius: 5px;
+    
+    padding: 20px;
+    width:60%;
+     align:center;
+   flex:8;
+  margin-top: 100px; 
+}
+.frmHead>h3 {
+display:inline;
+}
+.sideAndContent{
+margin:20px 30px;
+align-items:baseline;
+display:flex;
+ justify-content: space-around;
+}
+.vertical-menu {
+    width: 200px; /* Set a width if you like */
+flex: 2;
+
+}
+
+.topicList{
+display:flex;
+width:80%;
+}
+.topicList a {
+    background-color: #eee; /* Grey background color */
+    color: black; /* Black text color */
+    display: block; /* Make the links appear below each other */
+    padding: 12px; /* Add some padding */
+    text-decoration: none; /* Remove underline from links */
+    border:1px solid #ccc;
+   border-radius:5px;
+ flex:8;
+}
+.topicList .button{flex:2;}
+.topicList a:hover {
+    background-color: #ccc; /* Dark grey background on mouse-over */
+}
+.traineeList a{
+    background-color: #eee; /* Grey background color */
+    color: black; /* Black text color */
+    display: block; /* Make the links appear below each other */
+    padding: 12px; /* Add some padding */
+    text-decoration: none; /* Remove underline from links */
+    border:1px solid #ccc;
+   border-radius:5px;
+width:70%;
+}
+.traineeList a:hover {
+    background-color: #ccc; /* Dark grey background on mouse-over */
+}
+
+.vertical-menu a {
+    background-color: #eee; /* Grey background color */
+    color: black; /* Black text color */
+    display: block; /* Make the links appear below each other */
+    padding: 12px; /* Add some padding */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.vertical-menu a:hover {
+    background-color: #ccc; /* Dark grey background on mouse-over */
+}
+
+.vertical-menu a.active {
+    background-color: #00FFFF; /* Add a green color to the "active/current" link */
+    color: white;
+}
+</style>
+</head>
+
+
+<body ng-app="myApp" ng-controller="myCtrl2">  
+ <div class="header-cont ">
+      <a href=""><div class="title" ng-click="openHome()">Knowledge Nuke</div></a>
+
+       <div class="wrap">
+       <div class="search">
+      <input type="text" class="searchTerm" placeholder="What are you looking for?">
+      <button type="submit" class="searchButton">
+       <i class="fa fa-search"></i>
+     </button>
+   </div>
+</div>
+<div class="login-group">
+        
+</div>
+    </div>
+<div class="sideAndContent">
+ <div class="vertical-menu">
+  <a href="homepage.html"  >Home</a>
+  <a href="topiclistpage.html" >Topics</a>
+  <a ng-show="check()" href="tasklistpage.html"class="active">Tasks</a>
+ <a ng-show="check()"  href="toDo.html">TO DO section</a>
+  <a href="contactUs.html">Contact Us</a>
+  
+</div> 
+
+
+
+<div class="frm">
+<div class="frmHead">
+<h3>Task List</h3>
+<button style="float:right" ng-show="userRole==2" ng-click="createTask()">create task</button>
+</div>
+<hr><br>
+<div class="topicList" ng-repeat="x in record|orderBy:'-Create_Ts'" >
+<a href="" ng-show="userRole==2" ng-click="taskList(x)">{{x.Name}}</a>
+<a href="" ng-show="userRole==3" ng-click="taskList(x.Task)"ng-style="x.Visited && {'background-color':'#eee'}||userRole==3&&{'background-color':'#FF7F50'}">{{x.Task.Name}}</a>
+<button ng-show="userRole==2" ng-click="deleteTask(x.Id)">remove</button>
+
+</div>
+
+<h3 ng-show="userRole==2">Trainee List</h3>
+<hr ng-show="userRole==2"><br>
+<div  ng-show="userRole==2" class="traineeList" ng-repeat="x in traineeRecord|limitTo:pageSize:firstPage" >
+<a href="" ng-click="traineeList(x)"ng-style="x.UserSubmission.length && {'background-color':'#FF7F50'}||{'background-color':'#eee'}">{{x.FName}} {{x.LName}} </a>
+</div>
+<div class="pagibuttons" ng-show="userRole==2">
+<button   ng-disabled="firstPage==0" ng-click="previous()">&laquo;</button>{{start}}/{{end}}<button ng-disabled="(firstPage+pageSize)>=traineeRecord.length" ng-click="forward()">&raquo;</button>
+<div>
+</div>
+</div>
+<circle-spinner id="spinner" ng-show="prograssing"></circle-spinner>
+<!-- The Modal -->
+<div id="myModal" ng-show="showPopup" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span ng-click="close()" class="close">&times;</span>
+    <p>{{msg}}</p>
+<button ng-click="close()" style="border:none">OK</button>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script> 
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.js"></script> 
+ <script src="http://urigo.github.io/angular-spinkit/javascripts/angular-spinkit.js"></script>
+<link rel="stylesheet" type="text/css" href="popup.css"></link>
+<style>
+body{
+
+}
+.header-cont {
+        width:100%;
+        position:fixed;
+        top:0px;
+        background:white;
+        border:1px solid #CCC;
+
+        }
+    
+    .title {
+    height:40px;
+    background:#F0F0F0;
+    float:left;
+    font-family:"Lucida Console";
+    font-size:25px;
+    color:#6495ED;
+    margin:10px ;
+   padding:10px;
+    text-align:centre;
+        }.search {
+  width: 100%;
+  position: relative;
+
+}
+.login-group{
+float:right;
+margin:10px;
+
+}
+.login-group input[type="button"]{background-color:#9400D3;border-radius: 5px;color:#fff;height:30px;text-decoration: none;}
+.searchTerm {
+  float: left;
+  width: 100%;
+  border: 3px solid #00B4CC;
+  padding: 5px;
+  height: 20px;
+  border-radius: 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.searchButton {
+  position: absolute;  
+  right: -30px;
+  width: 40px;
+  height: 36px;
+  border: 1px solid #00B4CC;
+  background: #00B4CC;
+  text-align: center;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+background: #00B4CC;
+}
+
+/*Resize the wrap to see the search bar change!*/
+.wrap{
+  width: 30%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.frm input[type=text],input[type=email],input[type=password],select{
+    width: 70%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+   
+}
+
+.frm input[type=submit] {
+    width: 70%;
+    background-color: #1E90FF;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.frm input[type=submit]:hover {
+    background-color: #191970;
+}
+
+.frm {
+    border-radius: 5px;
+   /* background-color: #f2f2f2;*/
+    padding: 20px;
+    width:60%;
+    align:center;
+    margin-top:100px;
+    flex:8;
+}
+.topicList{
+    color: black; /* Black text color */
+    display: block; /* Make the links appear below each other */
+    padding: 12px; /* Add some padding */
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+.topicList a{
+    /*background-color: #eee;  Grey background color */
+   color: black; /* Black text color */
+    text-decoration: none; /* Remove underline from links */
+   
+}
+.topicList:hover  {
+   /* background-color: #ccc;  Dark grey background on mouse-over */
+}
+
+.sideAndContent{
+margin:20px 30px;
+align-items:baseline;
+display:flex;
+ justify-content: space-around;
+}
+.vertical-menu {
+    width: 200px; /* Set a width if you like */
+flex: 2;
+
+}
+
+.vertical-menu a {
+    background-color: #eee; /* Grey background color */
+    color: black; /* Black text color */
+    display: block; /* Make the links appear below each other */
+    padding: 12px; /* Add some padding */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.vertical-menu a:hover {
+    background-color: #ccc; /* Dark grey background on mouse-over */
+}
+
+.vertical-menu a.active {
+    background-color: #00FFFF; /* Add a green color to the "active/current" link */
+    color: white;
+}
+#spinner{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    color: white;
+
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+}
+.searchWrap{
+position:fixed;
+z-index:1;
+width:100%;
+height:300px;
+top:35px;
+overflow:auto;
+}
+.searchlist>a{
+
+background-color:#eee;
+text-decoration:none;
+
+display:block;
+padding:10px;
+}
+
+</style>
+</head>
+
+
+<body ng-app="myApp" ng-controller="validateCtrl">  
+
+ <div class="header-cont ">
+    <a href=""><div class="title" ng-click="openHome()">Knowledge Nuke</div></a>
+
+       <div class="wrap">
+       <div class="search">
+      <input type="text" class="searchTerm" placeholder="What are you looking for?" ng-model="searchList" ng-change="callSearch()">
+      <button type="submit" class="searchButton" ng-click="openSearchPage()">
+       <i class="fa fa-search"></i>
+     </button>
+   </div>
+<div class="searchWrap" ng-show="searchList.length">
+  <div  class="searchlist" ng-repeat="x in searchRecords">
+    <a href="" ng-click="openTopic(x)">{{ x.Head }}</a>
+  </div>
+</div>
+</div>
+<div class="login-group">
+        
+</div>
+    </div>
+<div class="sideAndContent">
+ <div class="vertical-menu">
+  <a href="homepage.html"  >Home</a>
+  <a href="topiclistpage.html">Topics</a>
+   <a ng-show="check()" href="tasklistpage.html">Tasks</a>
+     <a ng-show="check()" href="toDo.html">TO DO section</a>
+  <a href="contactUs.html">Contact Us</a>
+  
+</div> 
+
+
+<div class="frm">
+{{"Search Results"}}
+ <div class="topicList" ng-repeat="x in searchRecord" >
+<a href="" ng-click="openTopic(x)"><h2>{{x.Head}}</h2></a>
+
+</div>
+ <circle-spinner id="spinner" ng-show="prograssing"></circle-spinner>
+</div>
+<!-- The Modal -->
+<div id="myModal" ng-show="showPopup" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span ng-click="close()" class="close">&times;</span>
+    <p>{{msg}}</p>
+<button ng-click="close()" style="border:none">OK</button>
+  </div>
+
+</div>
+</div>
+<script>
+var app = angular.module('myApp', ['ngCookies','angularSpinkit']);
+app.controller('validateCtrl', function($scope,$http,$window,$cookies) {
+ 
+$scope.check=function(){
+if($cookies.get('token'))
+return true;
+else
+return false;
+};
+
+$scope.openTopic=function(x){
+$cookies.put('topicId',x.Id);
+$window.location.href="TopicPage.html";
+};
+$scope.openSearchPage=function(){
+if($scope.searchList.length){
+$cookies.put('searchTerm',$scope.searchList);
+$window.location.href="searchResult.html";
+}
+};
+$scope.callSearch=function(){
+console.log($scope.searchList);
+if($scope.searchList.length){
+$http.get("http://192.168.0.93:45455/api/search?value="+$scope.searchList)
+.then(function (response) {
+	
+	console.log("success "+response.data);
+     $scope.searchRecords=response.data;
+
+}, function (response) {
+	console.log("failure "+response.status);
+
+});
+}
+
+};
+$window.onclick = function() {
+   console.log("clicked");
+
+
+ $scope.$apply(function () {
+      $scope.searchList=[];
+    });
+}
+$scope.close=function(){
+$scope.showPopup=false;
+};
+$scope.prograssing=true;
+console.log($cookies.get('searchTerm'));
+$http.get("http://192.168.0.93:45455/api/search?value="+$cookies.get('searchTerm'))
+.then(function (response) {
+	
+	console.log("success "+response.data);
+	 $scope.searchRecord=response.data;
+$scope.prograssing=false;
+}, function (response) {
+    $scope.prograssing=false;
+	console.log("failure "+response.status);
+$scope.msg="error connecting to server";
+   $scope.showPopup=true;
+   
+});
+
+$scope.openHome=function(){
+$window.location.href="homepage.html";
+};
+ $scope.openTopic=function(x){
+$cookies.put('topicId',x.Id);
+$window.location.href="TopicPage.html";
+}; 
+
+});
+app.directive("loginGroup", function($cookies) {
+var innerData;
+if($cookies.get('token')){
+innerData=$cookies.get('UserName')+"<input type='button' value='signout' ng-click='signOut()'>";
+}
+else{
+innerData="<input type='button' value='Admin Section' ng-click='openAdmin()'><a href='login.html'><input type='button' value='Login'></a><a href='signup.html'><input type='button' value='Sign up' ></a>"    
+}
+return {
+        restrict : "C",
+        template : innerData
+     
+
+       
+    };
+});
+app.factory('httpRequestInterceptor', function ($cookies) {
+  return {
+   'request': function(config) {
+           console.log("second "+$cookies.get('token'));
+                
+               config.headers['token'] = $cookies.get('token');
+                console.log("config " +config.headers.token);
+          return config;
+    }
+  };
+});
+
+     app.config(['$httpProvider', function ($httpProvider,$cookies) {
+    //$httpProvider.defaults.headers.post['token'] =  $cookies.get('token');
+    $httpProvider.interceptors.push('httpRequestInterceptor');
+    
+}]);
+</script>
+</body>
+</html>

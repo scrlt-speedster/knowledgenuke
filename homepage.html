@@ -1,0 +1,384 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.js"></script> 
+
+<style type="text/css">
+    
+       body{
+        margin:0px;
+   
+        }
+
+    .header-cont {
+        width:100%;
+        position:fixed;
+        top:0px;
+        background:white;
+        border:1px solid #CCC;
+
+        }
+    
+    .title {
+    height:40px;
+    background:#F0F0F0;
+    float:left;
+    font-family:"Lucida Console";
+    font-size:25px;
+    color:#6495ED;
+    margin:10px ;
+   padding:10px;
+    text-align:centre;
+        }
+
+.content {
+   
+ 
+    border: 1px solid #CCC;
+   
+    margin: 100px 0px;
+    flex:8;
+}
+.login-group{
+float:right;
+margin:10px;
+text-decoration: none; ss
+}
+input[type="button"]{background-color:#9400D3;border-radius: 5px;color:#fff;height:30px;text-decoration: none;}
+
+.search {
+  width: 100%;
+  position: relative;
+
+}
+
+.searchTerm {
+  float: left;
+  width: 100%;
+  border: 3px solid #00B4CC;
+  padding: 5px;
+  height: 20px;
+  border-radius: 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.searchButton {
+  position: absolute;  
+  right: -30px;
+  width: 40px;
+  height: 36px;
+  border: 1px solid #00B4CC;
+  background: #00B4CC;
+  text-align: center;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+background: #00B4CC;
+}
+
+/*Resize the wrap to see the search bar change!*/
+.wrap{
+  width: 30%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+img {
+    width:100%;
+   
+}
+.columns {
+  display: flex;
+}
+ 
+.column {
+  flex: 1;
+text-align:center;
+padding-top:20px;
+color:#90EE90;
+background:#4169E1;
+}
+ 
+.main-column {
+  flex: 2;
+}
+.topics-heading{
+margin-top:40px;
+text-align:center;
+font-family: "Times New Roman";
+font-size:30px;
+color:#48D1CC;
+}
+ .house {
+ margin-top:15px;
+height:250px;
+ display:flex;
+ justify-content: space-around;
+
+ }
+ 
+ .room {
+border: 1px solid #00B4CC;
+ display:flex;
+ flex-direction: column;
+ width:200px;
+ height:200px;
+cursor:pointer;
+ }
+.door1{
+ 
+ flex:2;
+
+ }
+.door2{
+  
+flex:1;
+ text-align:center;
+
+ }
+.sideAndContent{
+margin:20px 30px;
+align-items:baseline;
+display:flex;
+ justify-content: space-around;
+}
+.vertical-menu {
+    width: 200px; /* Set a width if you like */
+flex: 2;
+
+}
+
+.vertical-menu a {
+    background-color: #eee; /* Grey background color */
+    color: black; /* Black text color */
+    display: block; /* Make the links appear below each other */
+    padding: 12px; /* Add some padding */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.vertical-menu a:hover {
+    background-color: #ccc; /* Dark grey background on mouse-over */
+}
+
+.vertical-menu a.active {
+    background-color: #00FFFF; /* Add a green color to the "active/current" link */
+    color: white;
+}
+.searchWrap{
+position:fixed;
+z-index:1;
+width:100%;
+height:300px;
+top:35px;
+overflow:auto;
+}
+.searchlist>a{
+
+background-color:#eee;
+text-decoration:none;
+
+display:block;
+padding:10px;
+}
+</style>
+
+
+    </head>
+
+    <body ng-app="myApp" ng-controller="myCtrl">
+     
+    <div class="header-cont ">
+        <a href=""><div class="title" ng-click="openHome()">Knowledge Nuke</div></a>
+
+       <div class="wrap">
+       <div class="search">
+      <input type="text" class="searchTerm" placeholder="What are you looking for?" ng-model="searchList" ng-change="callSearch()">
+      <button type="submit" class="searchButton" ng-click="openSearchPage()">
+       <i class="fa fa-search"></i>
+     </button>
+
+
+   </div>
+<div class="searchWrap" ng-show="searchList.length" id="myModal">
+  <div  class="searchlist" ng-repeat="x in searchRecords">
+    <a href="" ng-click="openTopic(x)">{{ x.Head }}</a>
+  </div>
+</div>
+</div>
+
+
+<div class="login-group">
+        
+</div>
+    </div>
+<div class="sideAndContent">
+ <div class="vertical-menu">
+  <a href="homepage.html" class="active" >Home</a>
+  <a  href="topiclistpage.html">Topics</a>
+  <a ng-show="check()" href="tasklistpage.html">Tasks</a>
+  <a ng-show="check()" href="toDo.html">TO DO section</a>
+  <a href="contactUs.html">Contact Us</a>
+  
+</div> 
+
+ <div class="content">  
+<div class="columns">
+  <div class="column ">
+   Welcome to the one stop solution to all the problems faced by a trainee at Hexaview Technologies. This site provide all the necessary resources you need to solve the task you are assigned. Mentors can add the task list online and registered users (Trainees) can submit their assignments.
+  </div>
+  <div class="main-column">
+    <img src="HP-Header-Responsive.jpg">
+  </div>
+</div>
+<div class="topics-heading">
+Commonly used Technologies
+</div>
+
+<div class="house">
+ <div class="room" ng-click="openAngular()">
+<div class="door1"><img src="angularjs.png"></div>
+<div class="door2">AngularJS</div>
+</div>
+</a>
+ <div class="room" ng-click="openDotnet()">
+<div class="door1"><img src="asp_net.png"></div>
+<div class="door2">ASP.NET</div>
+</div>
+ <div class="room" ng-click="openSpring()">
+<div class="door1"><img src="javaspring.png"></div>
+<div class="door2">Java Spring</div>
+</div>
+ <div class="room" ng-click="open()">
+<div class="door1"><img src="mysql.jpg"></div>
+<div class="door2">MySql</div>
+</div>
+ <div class="room" ng-click="open()">
+<div class="door1"><img src="javaServletJsp.png"></div>
+<div class="door2">Servlet/JSP</div>
+</div>
+ </div>
+ </div>
+</div>
+<script>
+
+
+var app = angular.module('myApp', ['ngCookies']);
+app.controller('myCtrl', function($scope,$http,$window,$cookies) {
+
+$window.onclick = function() {
+   console.log("clicked");
+
+
+ $scope.$apply(function () {
+      $scope.searchList=[];
+    });
+}
+ 
+$scope.openTopic=function(x){
+$cookies.put('topicId',x.Id);
+$window.location.href="TopicPage.html";
+};
+
+$scope.callSearch=function(){
+console.log($scope.searchList);
+if($scope.searchList.length){
+$http.get("http://192.168.0.93:45455/api/search?value="+$scope.searchList)
+.then(function (response) {
+	
+	console.log("success ");
+     $scope.searchRecords=response.data;
+
+}, function (response) {
+	console.log("failure "+response.status);
+
+});
+}
+
+};
+$scope.openSearchPage=function(){
+if($scope.searchList.length){
+$cookies.put('searchTerm',$scope.searchList);
+//$scope.searchList=[];
+$window.location.href="searchResult.html";
+}
+};
+$scope.openHome=function(){
+$window.location.href="homepage.html";
+};
+
+
+
+    $scope.openAngular= function() {
+   $cookies.put('topicId',36353);
+    $window.location.href ='TopicPage.html';
+      };
+  $scope.openDotnet= function() {
+   $cookies.put('topicId',4);
+    $window.location.href ='TopicPage.html';
+      };
+$scope.openSpring= function() {
+   $cookies.put('topicId',6);
+    $window.location.href ='TopicPage.html';
+      };
+$scope.check=function(){
+if($cookies.get('token'))
+return true;
+else
+return false;
+};
+   $scope.signOut=function(){
+  $cookies.remove('token');
+    $cookies.remove('UserName');
+ $cookies.remove('UserId');
+ $cookies.remove('UserRole');
+ $cookies.remove('UserEmail');
+  $window.location.href ='homepage.html';
+};
+
+
+
+});
+app.factory('httpRequestInterceptor', function ($cookies) {
+  return {
+   'request': function(config) {
+          
+                
+               config.headers['token'] = $cookies.get('token');
+                //console.log("config " +config.headers.token);
+          return config;
+    }
+  };
+});
+
+     app.config(['$httpProvider', function ($httpProvider,$cookies) {
+    //$httpProvider.defaults.headers.post['token'] =  $cookies.get('token');
+    $httpProvider.interceptors.push('httpRequestInterceptor');
+    
+}]);
+
+app.directive("loginGroup", function($cookies) {
+var innerData;
+if($cookies.get('token')){
+innerData=$cookies.get('UserName')+"<input type='button' value='signout' ng-click='signOut()'>";
+}
+else{
+innerData="<input type='button' value='Admin Section' ng-click='openAdmin()'><a href='login.html' style='text-decoration: none;'><input type='button' value='Login'></a><a href='signup.html' style='text-decoration: none;'><input type='button' value='Sign up' ></a>"    
+}
+return {
+        restrict : "C",
+        template : innerData
+     
+};
+});
+</script>
+</body></html>
+

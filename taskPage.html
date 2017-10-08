@@ -1,0 +1,319 @@
+<html>
+
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.js"></script> 
+<script src="angularjs-dropdown-multiselect.js"></script>
+ <script src="angular-spinkit.js"></script>
+<link rel="stylesheet" type="text/css" href="popup.css"></link> 
+<script src="taskScript.js"></script>
+
+<style type="text/css">
+.header-cont {
+        width:100%;
+        position:fixed;
+        top:0px;
+        background:white;
+        border:1px solid #CCC;
+
+        }
+    
+    .title {
+    height:40px;
+    background:#F0F0F0;
+    float:left;
+    font-family:"Lucida Console";
+    font-size:25px;
+    color:#6495ED;
+    margin:10px ;
+    padding:10px;
+    text-align:centre;
+        }
+.search {
+  width: 100%;
+  position: relative;
+
+}
+.login-group{
+float:right;
+margin:10px;
+
+}
+.login-group input[type="button"]{background-color:#9400D3;border-radius: 5px;color:#fff;height:30px;text-decoration: none;}
+.searchTerm {
+  float: left;
+  width: 100%;
+  border: 3px solid #00B4CC;
+  padding: 5px;
+  height: 36px;
+  border-radius: 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.searchButton {
+  position: absolute;  
+  right: -30px;
+  width: 40px;
+  height: 36px;
+  border: 1px solid #00B4CC;
+  background: #00B4CC;
+  text-align: center;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+background: #00B4CC;
+}
+
+/*Resize the wrap to see the search bar change!*/
+.wrap{
+  width: 30%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.title2{
+font-size:30px;
+margin-top:100px;
+ 
+padding:20px;
+text-align:center;
+color:#f43;
+ 
+}
+.topicList{
+ display:flex;
+ width:80%;
+
+}
+.topicList a {
+    background-color: #eee; /* Grey background color */
+    color: black; /* Black text color */
+    display: block; /* Make the links appear below each other */
+    padding: 12px; /* Add some padding */
+    text-decoration: none; /* Remove underline from links */
+    border:1px solid #ccc;
+   border-radius:5px;
+   flex:8;
+
+}
+.topicList .button{
+flex:2;
+
+}
+.topicList a:hover{
+    background-color: #ccc; /* Dark grey background on mouse-over */
+}
+.contentBody{
+
+flex: 8;
+ border: 1px solid #CCC;
+
+}
+.contentBody button {
+  background-color: #008CBA; 
+    border: none;
+    color: white;
+    padding: 9px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 11px;
+border-radius:3px;
+}
+.content{
+padding:20px;
+margin:20px 0;
+
+}
+.contentHead{
+color:orange;
+font-style: bold;
+font-size:20px;
+}
+.taskDesc{
+white-space:pre-wrap;/* Displays like entered in test area */
+}
+.sideAndContent{
+margin:20px 30px;
+
+display:flex;
+ justify-content: space-around;
+}
+
+.vertical-menu {
+    width: 200px; /* Set a width if you like */
+flex: 2;
+
+}
+
+.vertical-menu a {
+    background-color: #eee; /* Grey background color */
+    color: black; /* Black text color */
+    display: block; /* Make the links appear below each other */
+    padding: 12px; /* Add some padding */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.vertical-menu a:hover {
+    background-color: #ccc; /* Dark grey background on mouse-over */
+}
+
+.vertical-menu a.active {
+    background-color: #00FFFF; /* Add a green color to the "active/current" link */
+    color: white;
+}
+.headAndButton{display:flex;
+justify-content: space-between; }
+.buttonGroup{
+
+}
+.topicList a{
+    background-color: #eee; /* Grey background color */
+    color: black; /* Black text color */
+    display: block; /* Make the links appear below each other */
+    padding: 12px; /* Add some padding */
+    text-decoration: none; /* Remove underline from links */
+   
+}
+.topicList a:hover {
+    background-color: #ccc; /* Dark grey background on mouse-over */
+}
+</style>
+
+<head>
+
+<body ng-app="myApp" ng-controller="topicCtrl">
+ <div class="header-cont ">
+        <a href=""><div class="title" ng-click="openHome()">Knowledge Nuke</div></a>
+
+       <div class="wrap">
+       <div class="search">
+      <input type="text" class="searchTerm" placeholder="What are you looking for?">
+      <button type="submit" class="searchButton">
+       <i class="fa fa-search"></i>
+     </button>
+   </div>
+</div>
+<div class="login-group">
+        
+</div>
+    </div>
+ 
+<div class="title2">
+{{taskData.Task.Name}}
+</div>
+<div class="sideAndContent">
+ <div class="vertical-menu">
+  <a href="homepage.html">Home</a>
+  <a href="topiclistpage.html" >Topics</a>
+  <a ng-show="check()" href="tasklistpage.html">Tasks</a>
+ <a ng-show="check()"  href="toDo.html">TO DO section</a>
+  <a href="contactUs.html">Contact Us</a>
+  
+</div> 
+<div class="contentBody">
+<div class="content">
+<div class="contentHead">
+Problem Statement
+</div>
+<hr>
+<div class="taskDesc">
+{{taskData.Task.Description}}
+</div>
+</div>
+<div class="content">
+<div class="contentHead">
+Given on
+</div>
+<hr>
+
+{{taskData.Create_Ts| date:"medium"}}
+
+</div>
+<div class="content">
+<div class="contentHead">
+Days given to complete
+</div>
+<hr>
+
+{{taskData.Deadline}}
+
+</div>
+<div class="content">
+
+<div class="contentHead">
+Topics to Study
+</div>
+<hr>
+<div class="topicList" ng-repeat="x in record" ng-click="topicInfo(x)">
+<a href="">{{x.Topic.Name}}</a>
+
+</div>
+
+
+
+</div>
+
+
+<div class="content">
+
+<div class="contentHead">
+Integrating all Modules
+</div>
+
+
+<hr>
+<div ng-repeat="x in integrated">
+<div class="topicList"  >
+
+<a href="" ng-click="setAccordian(x)">{{x.Head}}<span ng-show="accordian==x.Id" style="float:right;color:grey">-</span>
+<span ng-show="accordian!=x.Id" style="float:right;color:grey">+</span></a>
+
+</div>
+<p class="" style="background-color:white;width:65%;white-space:pre-wrap;" ng-show="accordian==x.Id">{{x.Post}}</p>
+</div>
+</div>
+
+
+<div class="content">
+
+<div class="contentHead">
+Submission Section
+</div>
+
+<hr>
+<div class="topicList" ng-repeat="x in submissionRecord | orderBy:'-Mod_Ts'" >
+<a href="" ng-click="showSubmission(x)">{{x.Head}}</a>
+<button ng-click="removeSubmission(x)">Remove</button>
+</div>
+<br>
+<button ng-click="addSubmission()">Add New Submission</button>
+</div>
+
+</div>
+<circle-spinner id="spinner" ng-show="prograssing"></circle-spinner>
+<!-- The Modal -->
+<div id="myModal" ng-show="showPopup" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span ng-click="close()" class="close">&times;</span>
+    <p>{{msg}}</p>
+<button ng-click="close()" style="border:none">OK</button>
+  </div>
+
+</div>
+</body>
+
+
+</html>
+
+

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script> 
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.js"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
+<link rel="stylesheet" type="text/css" href="popup.css"></link>
+ <script src="angular-spinkit.js"></script>
+<link rel="stylesheet" type="text/css" href="popup.css"></link> 
+<style>
+input[type=text]{
+    width: 70%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    
+}
+body{
+background-image:url("walle.jpg");
+}
+input[type=submit] {
+    width: 70%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+input[type=file]{
+margin: 8px 0;
+width: 40%;
+}
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+.outerarea{
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    width:60%;
+     align:center;
+   margin-left:130px;
+}
+h3{
+margin-left:130px;
+}
+.content{
+height:300px;
+width:70%;
+
+ padding: 14px 20px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.filelinks{
+margin-bottom:15px;
+}
+</style>
+</head>
+
+
+<body ng-app="myApp" ng-controller="validateCtrl">  
+
+<h3>Blog</h3>
+
+<div class="outerarea">
+  <form  name="myForm" novalidate>
+   
+   
+    <label for="uname">Title</label><br>
+    <input type="text"  name="user" placeholder="Your Title.." ng-model="blogForm.Head" required>
+ <span style="color:red" ng-show="myForm.user.$dirty && myForm.user.$invalid">
+  <span ng-show="myForm.user.$error.required">title is required.</span>
+  </span>
+     <br>
+
+    <label for="pass">Content</label><br>
+  <textarea  class="content" id="password" name="password"  ng-model="blogForm.Post" required></textarea>
+<span style="color:red" ng-show="myForm.password.$dirty && myForm.password.$invalid">
+  <span ng-show="myForm.password.$error.required">Some Content is required.</span>
+  </span>
+<br><br>
+<div ng-show=fileLinks.length>
+<b>File Links :</b> <br><br>
+<div class="filelinks" ng-repeat="x in fileLinks" ng-bind-html="x">
+{{x}}
+</div>
+</div>
+<br>
+        <label for="file"><b>Upload File</b></label><br>
+          <input type = "file" file-model = "myFile" id="demo"/>
+         <button ng-click = "uploadFile()">upload me</button>
+<br>
+    <input type="submit" value="Submit" ng-disabled=" myForm.user.$invalid || myForm.password.$invalid" ng-click="submitBlog()">
+  </form>
+</div>
+<circle-spinner id="spinner" ng-show="prograssing"></circle-spinner>
+<!-- The Modal -->
+<div id="myModal" ng-show="showPopup" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span ng-click="close()" class="close">&times;</span>
+     
+    <p>{{msg}}</p>
+   <button ng-click="close()">OK</button>  
+</div>
+</div>
+<script type="text/javascript">
+var app = angular.module('myApp', ['ngSanitize','ngCookies','angularSpinkit']);
+app.directive('fileModel', ['$parse', function ($parse) {
+            return {
+               restrict: 'A',
+               link: function(scope, element, attrs) {
+                  var model = $parse(attrs.fileModel);
+                  var modelSetter = model.assign;
+                
+                  element.bind('change', function(){
+                     scope.$apply(function(){
+                        modelSetter(scope, element[0].files[0]);
+                     });
+                  });
+               }
+            };
+         }]);
+      
+ 
+         
+app.controller('validateCtrl', function($scope,$http,$cookies,$window) {
+
+//$scope.fileLinks=['<a href="#">file1</a>','<a href="#">file2</a>','<H1>Fuch</H1>']; 
+$scope.fileLinks=[];
+//$scope.fileLinks.push('<a href="www.google.com">file1</a>');
+//$scope.fileLinks.push('<img src="angularjs.png" alt="Smiley face" height="40" width="40">');
+
+$scope.uploadFile = function(){
+               var file = $scope.myFile;
+          
+              console.dir(file);
+               $scope.prograssing=true;
+               var uploadUrl = "http://192.168.0.93:45455/api/files";
+               var fd = new FormData();
+               fd.append('file', file);
+
+               $http.post(uploadUrl, fd, {
+                   transformRequest: angular.identity,
+                   headers: {'Content-Type': undefined}
+               })
+               .then( function(response)
+       {
+
+       $scope.prograssing=false;
+         $scope.msg="File upload Success , please copy the generated link in text area";
+          $scope.showPopup=true;
+       console.log("file "+response.headers()['file']);
+       $scope.fileLinks.push(response.headers()['file']);
+       },function(response){
+        $scope.prograssing=false;
+     $scope.msg="Failure to upload blog Maybe try your luck later...";
+$scope.showPopup=true;
+       console.log("failure "+response.status);
+       });
+            };
+
+
+$scope.submitBlog=function(){
+
+var topicApi=$cookies.get('topicApi');
+console.log(topicApi);
+$scope.blogForm.Topic_Id=$cookies.get('topicId');
+
+$http.post("http://192.168.0.93:45455/api/"+topicApi,$scope.blogForm).then( function(response)
+{
+
+console.log("success "+response.data);
+$scope.msg="Blog successfully added";
+$scope.showPopup=true;
+
+},function(response){
+console.log("failure "+response.status);
+$scope.msg="Failure to add blog Maybe try your luck later...";
+$scope.showPopup=true;
+});
+
+};
+
+$scope.close=function(){
+$scope.showPopup=false;
+
+};
+});
+app.factory('httpRequestInterceptor', function ($cookies) {
+  return {
+   'request': function(config) {
+           console.log("second "+$cookies.get('token'));
+                //config.headers=config.headers || {};
+               config.headers['token'] = $cookies.get('token');
+                console.log("config " +config.headers.token);
+          return config;
+    }
+  };
+});
+
+     app.config(['$httpProvider', function ($httpProvider,$cookies) {
+    //$httpProvider.defaults.headers.post['token'] =  $cookies.get('token');
+    $httpProvider.interceptors.push('httpRequestInterceptor');
+    
+}]);
+</script>
+</body>
+</html>

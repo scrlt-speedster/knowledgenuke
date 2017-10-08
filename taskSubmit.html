@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script> 
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.js"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
+ <script src="angular-spinkit.js"></script>
+<link rel="stylesheet" type="text/css" href="popup.css"></link> 
+<style>
+input[type=text]{
+    width: 70%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    
+}
+body{
+background-image:url("walle.jpg");
+}
+input[type=submit] {
+    width: 70%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+input[type=file]{
+margin: 8px 0;
+width: 40%;
+}
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+.outerarea{
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    width:60%;
+     align:center;
+   margin-left:130px;
+}
+h3{
+margin-left:130px;
+}
+.content{
+height:300px;
+width:70%;
+
+ padding: 14px 20px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.filelinks{
+margin-bottom:15px;
+}
+</style>
+</head>
+
+
+<body ng-app="myApp" ng-controller="validateCtrl">  
+
+<h3>Create Submission</h3>
+
+<div class="outerarea">
+  <form  name="myForm" novalidate>
+   
+   
+    <label for="uname">Title</label><br>
+    <input type="text"  name="user" placeholder="Your Title.." ng-model="blogForm.Head" required>
+ <span style="color:red" ng-show="myForm.user.$dirty && myForm.user.$invalid">
+  <span ng-show="myForm.user.$error.required">title is required.</span>
+  </span>
+     <br>
+
+    <label for="pass">Content</label><br>
+  <textarea  class="content" id="password" name="password"  ng-model="blogForm.Post" required></textarea>
+<span style="color:red" ng-show="myForm.password.$dirty && myForm.password.$invalid">
+  <span ng-show="myForm.password.$error.required">Some Content is required.</span>
+  </span>
+<br><br>
+
+<br>
+    <input type="submit" value="Submit" ng-disabled=" myForm.user.$invalid || myForm.password.$invalid" ng-click="submitBlog()">
+<circle-spinner id="spinner" ng-show="prograssing"></circle-spinner>
+  </form>
+
+</div>
+<circle-spinner id="spinner" ng-show="prograssing"></circle-spinner>
+<!-- The Modal -->
+<div id="myModal" ng-show="showPopup" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span ng-click="close()" class="close">&times;</span>
+     
+    <p>{{msg}}</p>
+   <button ng-click="close()">OK</button>  
+</div>
+</div>
+<script>
+var app = angular.module('myApp', ['ngSanitize','ngCookies','angularSpinkit']);
+
+         
+app.controller('validateCtrl', function($scope,$http,$cookies,$window) {
+
+
+
+$scope.submitBlog=function(){
+$scope.prograssing=true;
+ console.log("cookie"+$cookies.get('token'));
+$scope.blogForm.Task_Id=$cookies.get('taskId');
+$scope.blogForm.Type='1';
+$http.post("http://192.168.0.93:45455/api/UserSubmission",$scope.blogForm).then( function(response)
+{
+
+console.log("success "+response.data);
+$scope.prograssing=false;
+$scope.msg="Successful Submission";
+$scope.showPopup=true;
+},function(response){
+
+console.log("failure "+response.status);
+$scope.prograssing=false;
+$scope.msg="Unable to complete submission  Try again...";
+$scope.showPopup=true;
+
+});
+
+};
+$scope.close=function(){
+$scope.showPopup=false;
+$scope.prograssing=false;
+$window.close();
+};
+});
+app.factory('httpRequestInterceptor', function ($cookies) {
+  return {
+   'request': function(config) {
+           console.log("second "+$cookies.get('token'));
+      
+               config.headers['token'] = $cookies.get('token');
+                console.log("config " +config.headers.token);
+          return config;
+    }
+  };
+});
+
+     app.config(['$httpProvider', function ($httpProvider,$cookies) {
+    //$httpProvider.defaults.headers.post['token'] =  $cookies.get('token');
+    $httpProvider.interceptors.push('httpRequestInterceptor');
+    
+}]);
+</script>
+</body>
+</html>
